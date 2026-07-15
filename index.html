@@ -1,1 +1,31 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Motion × Ternium</title><style>html,body{margin:0;height:100%;background:#FF5000;font-family:Arial,sans-serif}.loading{height:100%;display:grid;place-items:center;color:#1A1A1A;font-weight:700}</style></head><body><div class="loading">Cargando propuesta…</div><script>(async()=>{const files=['site_00.txt', 'site_01.txt', 'site_02.txt', 'site_03.txt', 'site_04.txt', 'site_05.txt'];const parts=await Promise.all(files.map(f=>fetch('./site_chunks/'+f).then(r=>{if(!r.ok)throw new Error(f);return r.text()})));const b64=parts.join('').replace(/\s+/g,'');const bin=atob(b64);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));const html=new TextDecoder().decode(bytes);document.open();document.write(html);document.close();})().catch(e=>{document.body.innerHTML='<pre style="padding:24px">Error al cargar la propuesta: '+e.message+'</pre>';});</script></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Motion × Ternium</title>
+  <style>
+    html,body{height:100%;margin:0;background:#071018;color:#fff;font-family:Arial,sans-serif}
+    body{display:grid;place-items:center}
+    .status{opacity:.82;text-align:center;padding:2rem}
+  </style>
+</head>
+<body>
+  <div class="status" id="status">Cargando propuesta…</div>
+  <script>
+  (async () => {
+    const response = await fetch('./_assets/site.html.gz');
+    if (!response.ok) throw new Error(`No se pudo cargar ${response.url}`);
+    if (!('DecompressionStream' in window)) throw new Error('Navegador no compatible');
+    const stream = response.body.pipeThrough(new DecompressionStream('gzip'));
+    const html = await new Response(stream).text();
+    document.open();
+    document.write(html);
+    document.close();
+  })().catch((error) => {
+    console.error(error);
+    document.getElementById('status').textContent = 'No fue posible cargar la propuesta. Probá con una versión actualizada del navegador.';
+  });
+  </script>
+</body>
+</html>
