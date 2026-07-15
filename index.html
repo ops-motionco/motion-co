@@ -3,28 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Motion × Ternium</title>
+  <title>Motion × Ternium — Sprint de Transformación Digital</title>
   <style>
-    html,body{height:100%;margin:0;background:#071018;color:#fff;font-family:Arial,sans-serif}
+    html,body{height:100%;margin:0;background:#FF5000;color:#1A1A1A;font-family:Arial,sans-serif}
     body{display:grid;place-items:center}
-    .status{opacity:.82;text-align:center;padding:2rem}
+    .status{font-weight:700;text-align:center;padding:2rem}
   </style>
 </head>
 <body>
   <div class="status" id="status">Cargando propuesta…</div>
   <script>
   (async () => {
-    const response = await fetch('./_assets/site.html.gz');
-    if (!response.ok) throw new Error(`No se pudo cargar ${response.url}`);
-    if (!('DecompressionStream' in window)) throw new Error('Navegador no compatible');
-    const stream = response.body.pipeThrough(new DecompressionStream('gzip'));
-    const html = await new Response(stream).text();
+    const files = [
+      './site_chunks/site_00.txt',
+      './site_chunks/site_01.txt',
+      './site_chunks/site_02.txt',
+      './site_chunks/site_03.txt',
+      './site_chunks/site_04.txt',
+      './site_chunks/site_05.txt'
+    ];
+
+    const chunks = await Promise.all(files.map(async (path) => {
+      const response = await fetch(path, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`No se pudo cargar ${path}`);
+      return response.text();
+    }));
+
+    const base64 = chunks.join('').replace(/\s+/g, '');
+    const binary = atob(base64);
+    const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+    let html = new TextDecoder('utf-8').decode(bytes);
+
+    html = html
+      .replaceAll('./assets/motion-celeste.png', './assets/motion-teal.svg')
+      .replaceAll('./assets/motion-naranja.png', './assets/motion-orange.svg')
+      .replaceAll('./assets/ternium.png', './assets/ternium.svg')
+      .replace(/<script id="github-chunk-asset-loader">[\s\S]*?<\/script>/, '');
+
     document.open();
     document.write(html);
     document.close();
   })().catch((error) => {
     console.error(error);
-    document.getElementById('status').textContent = 'No fue posible cargar la propuesta. Probá con una versión actualizada del navegador.';
+    document.getElementById('status').textContent = 'No fue posible cargar la propuesta. Revisá la conexión y actualizá la página.';
   });
   </script>
 </body>
