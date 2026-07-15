@@ -1,18 +1,42 @@
-# Motion × Ternium — Offer Site
+# Motion × Ternium — Sprint de Transformación Digital
 
-Sitio estático de la propuesta de Motion para Ternium.
+Sitio público de la propuesta ejecutiva de Motion para Ternium.
 
-## Publicación
-GitHub Pages debe desplegarse desde la rama `main` y la carpeta `/ (root)`.
+## Estado
 
-## Archivos publicados
-- Sitio completo de la propuesta
-- Logos de Motion y Ternium
-- Detalle metodológico del Sprint de Transformación Digital
+El sitio y sus recursos visuales están publicados en la rama `main`.
 
-## Activos pendientes
+Para que quede accesible mediante GitHub Pages, configurar una única vez:
+
+1. `Settings` → `Pages`.
+2. En `Build and deployment`, elegir `Deploy from a branch`.
+3. Seleccionar `main` y `/ (root)`.
+4. Presionar `Save`.
+
+URL esperada: `https://ops-motionco.github.io/motion-co/`
+
+## Videos testimoniales
+
+Cargar en la carpeta `videos/` con estos nombres exactos:
+
+- `videos/basf.mp4`
+- `videos/ccu.mp4`
+
+El sitio ya está configurado para reproducir ambos MP4 en formato vertical.
+
+## Documentos descargables
+
+Cargar en la carpeta `docs/` con estos nombres exactos:
+
+- `docs/Ternium_Detalle_Metodologico_Sprint_Transformacion_Digital.docx`
 - `docs/Brochure_Motion.pdf`
-- Video BASF
-- Video CCU
 
-Para los videos se recomienda utilizar URLs embebibles no listadas de YouTube o Vimeo. También se admiten MP4 optimizados en la carpeta `videos/`.
+Los botones del sitio ya apuntan a estas rutas.
+
+## Estructura principal
+
+- `index.html`: cargador del sitio.
+- `site_chunks/`: contenido completo de la propuesta.
+- `assets/`: logos utilizados en la presentación.
+- `videos/`: testimonios.
+- `docs/`: documentos descargables.
